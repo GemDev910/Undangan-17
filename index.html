@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deandra's Sweet 17th</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&family=Roboto:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .invitation-container {
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            border: 2px solid #FFD700;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 0 20px #FFD700;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #FFD700;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        p {
+            margin: 10px 0;
+            font-size: 1rem;
+        }
+
+        .highlight {
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        .countdown {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.2rem;
+            margin: 20px 0;
+            color: #FFD700;
+            animation: fadeInOut 2s infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .balloon {
+            width: 30px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -50px;
+            opacity: 0;
+            animation: floatUp 10s linear infinite, fadeIn 1s forwards;
+            z-index: 0;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 60px;
+            background-color: white;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-150vh);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            h2 {
+                font-size: 1.2rem;
+            }
+            p {
+                font-size: 0.9rem;
+            }
+            .countdown {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="invitation-container">
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+
+        <h1>Deandra's Sweet 17th</h1>
+        <h2>You're Invited!</h2>
+        <p>Join us to celebrate the magical day of</p>
+        <p class="highlight">Deandra</p>
+        <p>on</p>
+        <p class="highlight">24th November, Sunday</p>
+        <p>at</p>
+        <p class="highlight">Golden Gems Cafe</p>
+        <p>Time: <span class="highlight">1:00 PM</span></p>
+
+        <div class="countdown">
+            Time remaining: <span id="time"></span>
+        </div>
+
+        <div class="footer">We can't wait to celebrate with you!</div>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            const eventDate = new Date("November 24, 2024 13:00:00").getTime();
+            const now = new Date().getTime();
+            const timeLeft = eventDate - now;
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById("time").innerText = `${days} days ${hours} hrs ${minutes} mins ${seconds} secs`;
+
+            if (timeLeft < 0) {
+                document.getElementById("time").innerText = "The event has started!";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+
+        function randomizeBalloons() {
+            const balloons = document.querySelectorAll('.balloon');
+            balloons.forEach(balloon => {
+                const randomLeft = Math.random() * 100;
+                const randomDelay = Math.random() * 5;
+                balloon.style.left = `${randomLeft}%`;
+                balloon.style.animationDelay = `${randomDelay}s`;
+            });
+        }
+
+        window.onload = randomizeBalloons;
+    </script>
+</body>
+</html>
