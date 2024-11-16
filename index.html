@@ -158,7 +158,7 @@
         <p>on</p>
         <p class="highlight">24th November, Sunday</p>
         <p>at</p>
-        <p class="highlight">Golden Gems Resto & Cafe By Classie Hotel</p>
+        <p class="highlight">Golden Gems Resto & Cafe By Classie Hotel</p> 
         <p>Time: <span class="highlight">1:00 PM</span></p>
 
         <div class="countdown">
@@ -189,20 +189,25 @@
         setInterval(updateCountdown, 1000);
 
         function randomizeBalloons() {
-            const balloons = document.querySelectorAll('.balloon');
             const isMobile = window.innerWidth <= 768;
-            const numBalloons = isMobile ? 2 : 5;
+            const balloons = document.querySelectorAll('.balloon');
+            
+            if (isMobile) {
+                // Ensure there are only 2 balloons on mobile
+                const requiredBalloons = 2;
+                const currentBalloons = document.querySelectorAll('.balloon').length;
 
-            document.querySelectorAll('.balloon').forEach((balloon, index) => {
-                if (index >= numBalloons) {
-                    balloon.remove();
+                // Remove extra balloons if present
+                for (let i = currentBalloons; i > requiredBalloons; i--) {
+                    document.querySelector('.invitation-container').removeChild(balloons[i - 1]);
                 }
-            });
 
-            for (let i = document.querySelectorAll('.balloon').length; i < numBalloons; i++) {
-                const newBalloon = document.createElement('div');
-                newBalloon.classList.add('balloon');
-                document.querySelector('.invitation-container').appendChild(newBalloon);
+                // Add new balloons if needed
+                for (let i = currentBalloons; i < requiredBalloons; i++) {
+                    const newBalloon = document.createElement('div');
+                    newBalloon.classList.add('balloon');
+                    document.querySelector('.invitation-container').appendChild(newBalloon);
+                }
             }
 
             const allBalloons = document.querySelectorAll('.balloon');
