@@ -136,6 +136,10 @@
             .countdown {
                 font-size: 1rem;
             }
+            .balloon {
+                width: 25px;
+                height: 35px;
+            }
         }
     </style>
 </head>
@@ -186,7 +190,23 @@
 
         function randomizeBalloons() {
             const balloons = document.querySelectorAll('.balloon');
-            balloons.forEach(balloon => {
+            const isMobile = window.innerWidth <= 768;
+            const numBalloons = isMobile ? 2 : 5;
+
+            document.querySelectorAll('.balloon').forEach((balloon, index) => {
+                if (index >= numBalloons) {
+                    balloon.remove();
+                }
+            });
+
+            for (let i = document.querySelectorAll('.balloon').length; i < numBalloons; i++) {
+                const newBalloon = document.createElement('div');
+                newBalloon.classList.add('balloon');
+                document.querySelector('.invitation-container').appendChild(newBalloon);
+            }
+
+            const allBalloons = document.querySelectorAll('.balloon');
+            allBalloons.forEach(balloon => {
                 const randomLeft = Math.random() * 100;
                 const randomDelay = Math.random() * 5;
                 balloon.style.left = `${randomLeft}%`;
@@ -195,6 +215,7 @@
         }
 
         window.onload = randomizeBalloons;
+        window.onresize = randomizeBalloons;
     </script>
 </body>
 </html>
